@@ -1,4 +1,4 @@
-package com.ray3k.unboxedinspace.menubehaviors;
+package com.ray3k.unboxedinspace.menubehaviours;
 
 import com.badlogic.gdx.math.MathUtils;
 import dev.lyze.gdxUnBox2d.GameObject;

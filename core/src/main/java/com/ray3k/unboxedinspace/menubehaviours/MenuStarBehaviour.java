@@ -1,4 +1,4 @@
-package com.ray3k.unboxedinspace.menubehaviors;
+package com.ray3k.unboxedinspace.menubehaviours;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -28,7 +28,7 @@ public class MenuStarBehaviour extends BehaviourAdapter {
     @Override
     public void start() {
         timer = LIFE;
-        sprite = new Sprite(Core.skin.getRegion("star"));
+        sprite = new Sprite(Core.skin.getSprite("star"));
         position = new Vector2(MenuScreen.WORLD_WIDTH / 2, MenuScreen.WORLD_HEIGHT / 2);
         velocity = new Vector2(MathUtils.random(MIN_START_SPEED, MAX_START_SPEED), 0);
         velocity.rotateDeg(MathUtils.random(360));

@@ -1,8 +1,11 @@
 package com.ray3k.unboxedinspace;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -10,8 +13,7 @@ import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.ray3k.unboxedinspace.menubehaviors.MenuStarBehaviour;
-import com.ray3k.unboxedinspace.menubehaviors.MenuStarGeneratorBehaviour;
+import com.ray3k.unboxedinspace.menubehaviours.MenuStarGeneratorBehaviour;
 import dev.lyze.gdxUnBox2d.GameObject;
 import dev.lyze.gdxUnBox2d.NoPhysicsWorld;
 import dev.lyze.gdxUnBox2d.UnBox;
@@ -56,6 +58,14 @@ public class MenuScreen extends ScreenAdapter {
         uiViewport.apply();
         stage.act(delta);
         stage.draw();
+
+        stage.addListener(new InputListener() {
+            @Override
+            public boolean keyDown(InputEvent event, int keycode) {
+                Core.core.setScreen(new GameScreen());
+                return super.keyDown(event, keycode);
+            }
+        });
     }
 
     @Override
@@ -70,6 +80,8 @@ public class MenuScreen extends ScreenAdapter {
     }
 
     private void createUI() {
+        Gdx.input.setInputProcessor(stage);
+
         Table root = new Table();
         root.setFillParent(true);
         stage.addActor(root);
