@@ -2,30 +2,40 @@ package com.ray3k.unboxedinspace;
 
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
+import com.ray3k.unboxedinspace.menubehaviors.MenuStarBehaviour;
+import com.ray3k.unboxedinspace.menubehaviors.MenuStarGeneratorBehaviour;
+import dev.lyze.gdxUnBox2d.GameObject;
+import dev.lyze.gdxUnBox2d.NoPhysicsWorld;
+import dev.lyze.gdxUnBox2d.UnBox;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import static com.ray3k.unboxedinspace.Core.skin;
 
 /** First screen of the application. Displayed after the application is created. */
-public class FirstScreen extends ScreenAdapter {
+public class MenuScreen extends ScreenAdapter {
+    public static final float WORLD_WIDTH = 800;
+    public static final float WORLD_HEIGHT = 800;
     private FillViewport starViewport;
-    private ScreenViewport uiViewport;
+    private SpriteBatch spriteBatch;
+    public ScreenViewport uiViewport;
     private Stage stage;
+    public static UnBox unBox;
 
     @Override
     public void show() {
-        starViewport = new FillViewport(800, 800);
+        starViewport = new FillViewport(WORLD_WIDTH, WORLD_HEIGHT);
         uiViewport = new ScreenViewport();
-        stage = new Stage(uiViewport);
+        spriteBatch = new SpriteBatch();
+        stage = new Stage(uiViewport, spriteBatch);
+        unBox = new UnBox<>(new NoPhysicsWorld());
 
         createStarField();
         createUI();
@@ -34,6 +44,15 @@ public class FirstScreen extends ScreenAdapter {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(Color.BLACK);
+
+        unBox.preRender(delta);
+        starViewport.apply();
+        spriteBatch.begin();
+        spriteBatch.setProjectionMatrix(starViewport.getCamera().combined);
+        unBox.render(stage.getBatch());
+        spriteBatch.end();
+        unBox.postRender();
+
         uiViewport.apply();
         stage.act(delta);
         stage.draw();
@@ -41,11 +60,13 @@ public class FirstScreen extends ScreenAdapter {
 
     @Override
     public void resize(int width, int height) {
+        starViewport.update(width, height, true);
         uiViewport.update(width, height, true);
     }
 
     private void createStarField() {
-        
+        GameObject go = new GameObject(unBox);
+        new MenuStarGeneratorBehaviour(go);
     }
 
     private void createUI() {
