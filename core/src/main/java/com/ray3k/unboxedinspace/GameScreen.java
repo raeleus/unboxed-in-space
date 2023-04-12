@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -14,8 +16,11 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.ray3k.unboxedinspace.gamebehaviours.*;
+import com.ray3k.unboxedinspace.gamebehaviours.TeamBehaviour.Team;
 import dev.lyze.gdxUnBox2d.*;
 import dev.lyze.gdxUnBox2d.behaviours.Box2dBehaviour;
+import dev.lyze.gdxUnBox2d.behaviours.fixtures.CreateBoxFixtureBehaviour;
+import dev.lyze.gdxUnBox2d.behaviours.fixtures.CreateCircleFixtureBehaviour;
 
 /** First screen of the application. Displayed after the application is created. */
 public class GameScreen extends ScreenAdapter {
@@ -79,20 +84,41 @@ public class GameScreen extends ScreenAdapter {
     private void initGame() {
         GameObject go = new GameObject(unBox);
         new PlayerBehaviour(go);
-        new Box2dBehaviour(BodyDefType.DynamicBody, go);
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyType.DynamicBody;
+        bodyDef.position.set(5, 5);
+        new Box2dBehaviour(bodyDef, go);
         new MovementKeyboardBehaviour(go);
         new ShootSingleBehaviour(go);
-        new TeamPlayerBehaviour(go);
+        new TeamBehaviour(go, Team.PLAYER);
 
         Sprite sprite = new Sprite(Core.skin.getSprite("player"));
         sprite.setScale(.5f);
         new SpriteBehaviour(go, 0, 0, sprite, RO_CHARACTERS);
+
+        new CreateCircleFixtureBehaviour(.25f, go);
 
         go = new GameObject(unBox);
         new SpawnerBehaviour(go);
 
         go = new GameObject(unBox);
         new StarSpawnerBehaviour(go);
+
+        go = new GameObject(unBox);
+        new Box2dBehaviour(BodyDefType.StaticBody, go);
+        new CreateBoxFixtureBehaviour(.5f, WORLD_HEIGHT / 2, new Vector2(-.5f, WORLD_HEIGHT / 2), go);
+
+        go = new GameObject(unBox);
+        new Box2dBehaviour(BodyDefType.StaticBody, go);
+        new CreateBoxFixtureBehaviour( .5f, WORLD_HEIGHT / 2, new Vector2(WORLD_WIDTH + .5f, WORLD_HEIGHT / 2), go);
+
+        go = new GameObject(unBox);
+        new Box2dBehaviour(BodyDefType.StaticBody, go);
+        new CreateBoxFixtureBehaviour(WORLD_WIDTH / 2, .5f, new Vector2(WORLD_WIDTH / 2, -.5f), go);
+
+        go = new GameObject(unBox);
+        new Box2dBehaviour(BodyDefType.StaticBody, go);
+        new CreateBoxFixtureBehaviour(WORLD_WIDTH / 2, .5f, new Vector2(WORLD_WIDTH / 2, WORLD_HEIGHT + .5f), go);
     }
 
     private void createUI() {

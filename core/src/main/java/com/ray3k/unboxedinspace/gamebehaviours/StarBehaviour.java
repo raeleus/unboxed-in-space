@@ -25,17 +25,12 @@ public class StarBehaviour extends BehaviourAdapter {
     }
 
     @Override
-    public void fixedUpdate() {
+    public void update(float delta) {
         GameObject go = getGameObject();
         Box2dBehaviour box2dBehaviour = go.getBehaviour(Box2dBehaviour.class);
         if (box2dBehaviour != null) {
             Body body = box2dBehaviour.getBody();
             if (body.getTransform().getPosition().y < (WORLD_HEIGHT - gameViewport.getWorldHeight()) / 2) go.destroy();
         }
-    }
-
-    @Override
-    public void onDestroy() {
-        System.out.println("destroyed");
     }
 }

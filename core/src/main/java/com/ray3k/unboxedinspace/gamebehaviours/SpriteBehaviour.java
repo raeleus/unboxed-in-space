@@ -32,6 +32,7 @@ public class SpriteBehaviour extends BehaviourAdapter {
         if (getGameObject().getBehaviour(Box2dBehaviour.class) != null) {
             Body body = getGameObject().getBehaviour(Box2dBehaviour.class).getBody();
             position.set(body.getPosition());
+            position.add(body.getLinearVelocity().x * timeStep, body.getLinearVelocity().y * timeStep);
             sprite.setRotation(MathUtils.radDeg * body.getTransform().getRotation());
         }
         else {
@@ -39,7 +40,7 @@ public class SpriteBehaviour extends BehaviourAdapter {
             sprite.setRotation(0);
         }
 
-        position.add(offsetX, offsetY);
+        position.add(offsetX - sprite.getWidth() / 2, offsetY - sprite.getHeight() / 2);
         sprite.setPosition(position.x, position.y);
     }
 

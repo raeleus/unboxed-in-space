@@ -2,16 +2,14 @@ package com.ray3k.unboxedinspace.gamebehaviours;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.ray3k.unboxedinspace.GameScreen;
 import dev.lyze.gdxUnBox2d.BodyDefType;
 import dev.lyze.gdxUnBox2d.GameObject;
 import dev.lyze.gdxUnBox2d.behaviours.BehaviourAdapter;
 import dev.lyze.gdxUnBox2d.behaviours.Box2dBehaviour;
 
 import static com.ray3k.unboxedinspace.Core.skin;
-import static com.ray3k.unboxedinspace.GameScreen.*;
+import static com.ray3k.unboxedinspace.GameScreen.RO_BACKGROUND;
+import static com.ray3k.unboxedinspace.GameScreen.unBox;
 
 public class StarSpawnerBehaviour extends BehaviourAdapter {
     private static final float MAX_DELAY = .2f;
