@@ -29,13 +29,16 @@ public class SpriteBehaviour extends BehaviourAdapter {
 
     @Override
     public void fixedUpdate() {
+
+    }
+
+    @Override
+    public void update(float delta) {
         if (getGameObject().getBehaviour(Box2dBehaviour.class) != null) {
             Body body = getGameObject().getBehaviour(Box2dBehaviour.class).getBody();
             position.set(body.getPosition());
-            position.add(body.getLinearVelocity().x * timeStep, body.getLinearVelocity().y * timeStep);
             sprite.setRotation(MathUtils.radDeg * body.getTransform().getRotation());
-        }
-        else {
+        } else {
             position.setZero();
             sprite.setRotation(0);
         }
