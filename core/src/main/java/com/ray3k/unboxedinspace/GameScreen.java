@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -32,6 +33,10 @@ public class GameScreen extends ScreenAdapter {
     public static final float RO_PROJECTILES = -5f;
     public static final float RO_CHARACTERS = 0f;
     public static final float RO_EXPLOSIONS = 5f;
+    public static final short CAT_WALL = 0x1 << 1;
+    public static final short CAT_PLAYER = 0x1 << 2;
+    public static final short CAT_ENEMY = 0x1 << 3;
+    public static final short CAT_PROJECTILE = 0x1 << 4;
 
     public static ExtendViewport gameViewport;
     private SpriteBatch spriteBatch;
@@ -86,39 +91,49 @@ public class GameScreen extends ScreenAdapter {
         new PlayerBehaviour(go);
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyType.DynamicBody;
-        bodyDef.position.set(5, 5);
+        bodyDef.position.set(5, 2);
         new Box2dBehaviour(bodyDef, go);
         new MovementKeyboardBehaviour(go);
         new ShootSingleBehaviour(go);
         new TeamBehaviour(go, Team.PLAYER);
+        new HealthBehaviour(go, 100);
 
         Sprite sprite = new Sprite(Core.skin.getSprite("player"));
         sprite.setScale(.5f);
         new SpriteBehaviour(go, 0, 0, sprite, RO_CHARACTERS);
 
-        new CreateCircleFixtureBehaviour(.25f, go);
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.filter.categoryBits = CAT_PLAYER;
+        fixtureDef.filter.maskBits = CAT_WALL + CAT_ENEMY + CAT_PROJECTILE;
+        new CreateCircleFixtureBehaviour(Vector2.Zero, .25f, fixtureDef, go);
 
         go = new GameObject(unBox);
-        new SpawnerBehaviour(go);
+        new EnemySpawnerBehaviour(go);
 
         go = new GameObject(unBox);
         new StarSpawnerBehaviour(go);
 
         go = new GameObject(unBox);
         new Box2dBehaviour(BodyDefType.StaticBody, go);
-        new CreateBoxFixtureBehaviour(.5f, WORLD_HEIGHT / 2, new Vector2(-.5f, WORLD_HEIGHT / 2), go);
+        fixtureDef = new FixtureDef();
+        fixtureDef.filter.categoryBits = CAT_WALL;
+        new CreateBoxFixtureBehaviour(.5f, WORLD_HEIGHT / 2, new Vector2(-.5f, WORLD_HEIGHT / 2), fixtureDef, go);
+        new WallBehaviour(go);
 
         go = new GameObject(unBox);
         new Box2dBehaviour(BodyDefType.StaticBody, go);
-        new CreateBoxFixtureBehaviour( .5f, WORLD_HEIGHT / 2, new Vector2(WORLD_WIDTH + .5f, WORLD_HEIGHT / 2), go);
+        new CreateBoxFixtureBehaviour( .5f, WORLD_HEIGHT / 2, new Vector2(WORLD_WIDTH + .5f, WORLD_HEIGHT / 2), fixtureDef, go);
+        new WallBehaviour(go);
 
         go = new GameObject(unBox);
         new Box2dBehaviour(BodyDefType.StaticBody, go);
-        new CreateBoxFixtureBehaviour(WORLD_WIDTH / 2, .5f, new Vector2(WORLD_WIDTH / 2, -.5f), go);
+        new CreateBoxFixtureBehaviour(WORLD_WIDTH / 2, .5f, new Vector2(WORLD_WIDTH / 2, -.5f), fixtureDef, go);
+        new WallBehaviour(go);
 
         go = new GameObject(unBox);
         new Box2dBehaviour(BodyDefType.StaticBody, go);
-        new CreateBoxFixtureBehaviour(WORLD_WIDTH / 2, .5f, new Vector2(WORLD_WIDTH / 2, WORLD_HEIGHT + .5f), go);
+        new CreateBoxFixtureBehaviour(WORLD_WIDTH / 2, .5f, new Vector2(WORLD_WIDTH / 2, WORLD_HEIGHT + .5f), fixtureDef, go);
+        new WallBehaviour(go);
     }
 
     private void createUI() {

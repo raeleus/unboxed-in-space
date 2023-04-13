@@ -8,9 +8,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.ray3k.unboxedinspace.Core;
-import com.ray3k.unboxedinspace.GameScreen;
 import com.ray3k.unboxedinspace.gamebehaviours.TeamBehaviour.Team;
-import dev.lyze.gdxUnBox2d.BodyDefType;
 import dev.lyze.gdxUnBox2d.GameObject;
 import dev.lyze.gdxUnBox2d.behaviours.BehaviourAdapter;
 import dev.lyze.gdxUnBox2d.behaviours.Box2dBehaviour;
@@ -18,12 +16,12 @@ import dev.lyze.gdxUnBox2d.behaviours.fixtures.CreateCircleFixtureBehaviour;
 
 import static com.ray3k.unboxedinspace.GameScreen.*;
 
-public class ShootSingleBehaviour extends BehaviourAdapter {
-    private static final float DELAY = .1f;
+public class ShootEnemyBehaviour extends BehaviourAdapter {
+    private static final float DELAY = .2f;
     private static final float bulletVelocity = 10f;
     private float timer;
 
-    public ShootSingleBehaviour(GameObject gameObject) {
+    public ShootEnemyBehaviour(GameObject gameObject) {
         super(gameObject);
     }
 
@@ -53,7 +51,7 @@ public class ShootSingleBehaviour extends BehaviourAdapter {
             bodyDef.position.set(position);
             new Box2dBehaviour(bodyDef, go);
 
-            Sprite sprite = new Sprite(Core.skin.getSprite("bullet-player"));
+            Sprite sprite = new Sprite(Core.skin.getSprite("bullet-enemy"));
             new SpriteBehaviour(go, 0, 0, sprite, RO_PROJECTILES);
 
             new TeamBehaviour(go, teamBehaviour.team);

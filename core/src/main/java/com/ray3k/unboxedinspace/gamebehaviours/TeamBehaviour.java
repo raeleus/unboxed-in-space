@@ -5,7 +5,7 @@ import dev.lyze.gdxUnBox2d.behaviours.BehaviourAdapter;
 
 public class TeamBehaviour extends BehaviourAdapter {
     public enum Team {
-        PLAYER, ENEMY;
+        PLAYER, ENEMY, UPGRADE;
     }
     public Team team;
 
