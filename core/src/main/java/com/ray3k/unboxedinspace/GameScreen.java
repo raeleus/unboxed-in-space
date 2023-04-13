@@ -94,7 +94,7 @@ public class GameScreen extends ScreenAdapter {
         bodyDef.position.set(5, 2);
         new Box2dBehaviour(bodyDef, go);
         new MovementKeyboardBehaviour(go);
-        new ShootSingleBehaviour(go);
+        new ShootDoubleBehaviour(go);
         new TeamBehaviour(go, Team.PLAYER);
         new HealthBehaviour(go, 100);
 

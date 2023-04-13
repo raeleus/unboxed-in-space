@@ -1,11 +1,13 @@
 package com.ray3k.unboxedinspace.gamebehaviours;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.ray3k.unboxedinspace.Core;
 import com.ray3k.unboxedinspace.gamebehaviours.TeamBehaviour.Team;
 import dev.lyze.gdxUnBox2d.Behaviour;
 import dev.lyze.gdxUnBox2d.GameObject;
@@ -17,11 +19,12 @@ import static com.ray3k.unboxedinspace.GameScreen.*;
 
 public class ProjectileBehaviour extends BehaviourAdapter {
     private final Vector2 velocity;
-    private float damage = 25;
+    private float damage;
 
-    public ProjectileBehaviour(GameObject gameObject, Vector2 velocity) {
+    public ProjectileBehaviour(GameObject gameObject, Vector2 velocity, float damage) {
         super(gameObject);
         this.velocity = velocity;
+        this.damage = damage;
     }
 
     @Override
@@ -40,6 +43,9 @@ public class ProjectileBehaviour extends BehaviourAdapter {
         if (teamBehaviour.team == Team.PLAYER) fixtureDef.filter.maskBits = CAT_ENEMY + CAT_WALL;
         else fixtureDef.filter.maskBits = CAT_PLAYER + CAT_WALL;
         new CreateCircleFixtureBehaviour(Vector2.Zero, .1f, fixtureDef, go);
+
+        Sprite sprite = new Sprite(Core.skin.getSprite(teamBehaviour.team == Team.PLAYER ? "bullet-player" : "bullet-enemy"));
+        new SpriteBehaviour(go, 0, 0, sprite, RO_PROJECTILES);
     }
 
     @Override
