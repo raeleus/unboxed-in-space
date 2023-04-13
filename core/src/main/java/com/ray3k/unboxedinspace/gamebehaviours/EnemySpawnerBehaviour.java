@@ -7,7 +7,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.ray3k.unboxedinspace.Core;
-import com.ray3k.unboxedinspace.GameScreen;
 import com.ray3k.unboxedinspace.gamebehaviours.TeamBehaviour.Team;
 import dev.lyze.gdxUnBox2d.GameObject;
 import dev.lyze.gdxUnBox2d.behaviours.BehaviourAdapter;
@@ -37,11 +36,10 @@ public class EnemySpawnerBehaviour extends BehaviourAdapter {
         timer -= delta;
         if (timer < 0) {
             timer = delay;
-            System.out.println("delay = " + delay);
 
             GameObject go = new GameObject(unBox);
             new EnemyBehaviour(go);
-            new ShootEnemyBehaviour(go);
+            new ShootSlowBehaviour(go);
             new TeamBehaviour(go, Team.ENEMY);
             new HealthBehaviour(go, 50);
 
@@ -58,6 +56,7 @@ public class EnemySpawnerBehaviour extends BehaviourAdapter {
             sprite.setScale(.5f);
             new SpriteBehaviour(go, 0, 0, sprite, RO_CHARACTERS);
 
+            enemies.add(go);
         }
     }
 }

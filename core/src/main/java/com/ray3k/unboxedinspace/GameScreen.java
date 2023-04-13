@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -45,6 +46,8 @@ public class GameScreen extends ScreenAdapter {
     private Stage stage;
     public static UnBox<Box2dPhysicsWorld> unBox;
     public static float timeStep;
+    public static final Array<GameObject> enemies = new Array<>();
+    public static GameObject player;
 
     @Override
     public void show() {
@@ -87,27 +90,27 @@ public class GameScreen extends ScreenAdapter {
     }
 
     private void initGame() {
-        GameObject go = new GameObject(unBox);
-        new PlayerBehaviour(go);
+        player = new GameObject(unBox);
+        new PlayerBehaviour(player);
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyType.DynamicBody;
         bodyDef.position.set(5, 2);
-        new Box2dBehaviour(bodyDef, go);
-        new MovementKeyboardBehaviour(go);
-        new ShootDoubleBehaviour(go);
-        new TeamBehaviour(go, Team.PLAYER);
-        new HealthBehaviour(go, 100);
+        new Box2dBehaviour(bodyDef, player);
+        new MovementKeyboardBehaviour(player);
+        new ShootAsteriskBehaviour(player);
+        new TeamBehaviour(player, Team.PLAYER);
+        new HealthBehaviour(player, 100);
 
         Sprite sprite = new Sprite(Core.skin.getSprite("player"));
         sprite.setScale(.5f);
-        new SpriteBehaviour(go, 0, 0, sprite, RO_CHARACTERS);
+        new SpriteBehaviour(player, 0, 0, sprite, RO_CHARACTERS);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.filter.categoryBits = CAT_PLAYER;
         fixtureDef.filter.maskBits = CAT_WALL + CAT_ENEMY + CAT_PROJECTILE;
-        new CreateCircleFixtureBehaviour(Vector2.Zero, .25f, fixtureDef, go);
+        new CreateCircleFixtureBehaviour(Vector2.Zero, .1f, fixtureDef, player);
 
-        go = new GameObject(unBox);
+        GameObject go = new GameObject(unBox);
         new EnemySpawnerBehaviour(go);
 
         go = new GameObject(unBox);
