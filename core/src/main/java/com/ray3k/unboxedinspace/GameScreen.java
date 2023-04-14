@@ -21,6 +21,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.ray3k.unboxedinspace.gamebehaviours.*;
 import com.ray3k.unboxedinspace.gamebehaviours.TeamBehaviour.Team;
 import com.ray3k.unboxedinspace.gamebehaviours.shoot.ShootSingleBehaviour;
+import com.ray3k.unboxedinspace.gamebehaviours.shoot.ShootSmartBehaviour;
 import dev.lyze.gdxUnBox2d.*;
 import dev.lyze.gdxUnBox2d.behaviours.Box2dBehaviour;
 import dev.lyze.gdxUnBox2d.behaviours.fixtures.CreateBoxFixtureBehaviour;
@@ -68,6 +69,7 @@ public class GameScreen extends ScreenAdapter {
         timeStep = unBox.getOptions().getTimeStep();
         if (score > bestScore) bestScore = score;
         score = 0;
+        enemies.clear();
 
         initGame();
         createUI();
@@ -106,7 +108,7 @@ public class GameScreen extends ScreenAdapter {
         bodyDef.position.set(5, 2);
         new Box2dBehaviour(bodyDef, player);
         new MovementKeyboardBehaviour(player);
-        Behaviour behaviour = new ShootSingleBehaviour(player);
+        Behaviour behaviour = new ShootSmartBehaviour(player);
         new PlayerBehaviour(player, behaviour);
         new TeamBehaviour(player, Team.PLAYER);
         new HealthBehaviour(player, 100, 0);

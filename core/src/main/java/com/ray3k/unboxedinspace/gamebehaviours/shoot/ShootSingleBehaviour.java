@@ -33,12 +33,12 @@ public class ShootSingleBehaviour extends BehaviourAdapter {
 
     @Override
     public void update(float delta) {
-        Body body = getGameObject().getBehaviour(Box2dBehaviour.class).getBody();
-        TeamBehaviour teamBehaviour = getGameObject().getBehaviour(TeamBehaviour.class);
         timer -= delta;
         if (timer < 0) {
             timer = delay;
 
+            Body body = getGameObject().getBehaviour(Box2dBehaviour.class).getBody();
+            TeamBehaviour teamBehaviour = getGameObject().getBehaviour(TeamBehaviour.class);
             if (teamBehaviour.team == Team.PLAYER) soundLaser.play(.1f);
 
             GameObject go = new GameObject(unBox);

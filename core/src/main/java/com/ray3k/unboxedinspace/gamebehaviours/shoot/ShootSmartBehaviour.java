@@ -14,6 +14,7 @@ import dev.lyze.gdxUnBox2d.GameObject;
 import dev.lyze.gdxUnBox2d.behaviours.BehaviourAdapter;
 import dev.lyze.gdxUnBox2d.behaviours.Box2dBehaviour;
 
+import static com.ray3k.unboxedinspace.Core.soundLaser;
 import static com.ray3k.unboxedinspace.GameScreen.*;
 
 public class ShootSmartBehaviour extends BehaviourAdapter {
@@ -35,40 +36,42 @@ public class ShootSmartBehaviour extends BehaviourAdapter {
 
     @Override
     public void update(float delta) {
-        Body body = getGameObject().getBehaviour(Box2dBehaviour.class).getBody();
-        TeamBehaviour teamBehaviour = getGameObject().getBehaviour(TeamBehaviour.class);
-
-        float closestDistance = Float.MAX_VALUE;
-        GameObject closest = null;
-
-        if (teamBehaviour.team == Team.PLAYER) for (GameObject go : enemies) {
-            Box2dBehaviour beh = go.getBehaviour(Box2dBehaviour.class);
-            if (beh != null) {
-                temp.set(go.getBehaviour(Box2dBehaviour.class).getBody().getTransform().getPosition());
-                temp.sub(getGameObject().getBehaviour(Box2dBehaviour.class).getBody().getTransform().getPosition());
-                float distance = temp.len();
-                if (distance < closestDistance) {
-                    closestDistance = distance;
-                    closest = go;
-                }
-            }
-        } else closest = player;
-
-        if (closest != null) {
-            Body enemyBody = closest.getBehaviour(Box2dBehaviour.class).getBody();
-            Vector2 sol = intercept(body.getPosition(), bulletVelocity, enemyBody.getPosition(), enemyBody.getLinearVelocity());
-
-            if (sol != null) {
-                angle = sol.sub(body.getTransform().getPosition()).angleDeg();
-            } else {
-                angle = 90;
-            }
-        }
-
-
         timer -= delta;
         if (timer < 0) {
             timer = delay;
+            Body body = getGameObject().getBehaviour(Box2dBehaviour.class).getBody();
+            TeamBehaviour teamBehaviour = getGameObject().getBehaviour(TeamBehaviour.class);
+
+            if (teamBehaviour.team == Team.PLAYER) soundLaser.play(.1f);
+
+            float closestDistance = Float.MAX_VALUE;
+            GameObject closest = null;
+
+            if (teamBehaviour.team == Team.PLAYER) for (GameObject go : enemies) {
+                Box2dBehaviour beh = go.getBehaviour(Box2dBehaviour.class);
+                if (beh != null) {
+                    temp.set(go.getBehaviour(Box2dBehaviour.class).getBody().getTransform().getPosition());
+                    temp.sub(getGameObject().getBehaviour(Box2dBehaviour.class).getBody().getTransform().getPosition());
+                    float distance = temp.len();
+                    if (distance < closestDistance) {
+                        closestDistance = distance;
+                        closest = go;
+                    }
+                }
+            } else closest = player;
+
+            if (closest != null) {
+                Body enemyBody = closest.getBehaviour(Box2dBehaviour.class).getBody();
+                Vector2 sol = intercept(body.getPosition(), bulletVelocity, enemyBody.getPosition(), enemyBody.getLinearVelocity());
+
+                if (sol != null) {
+                    angle = sol.sub(body.getTransform().getPosition()).angleDeg();
+                } else {
+                    angle = 90;
+                }
+            }
+
+            if (teamBehaviour.team == Team.PLAYER) soundLaser.play(.1f);
 
             GameObject go = new GameObject(unBox);
             Vector2 velocity = new Vector2(bulletVelocity, 0);

@@ -14,6 +14,7 @@ import dev.lyze.gdxUnBox2d.behaviours.BehaviourAdapter;
 import dev.lyze.gdxUnBox2d.behaviours.Box2dBehaviour;
 import dev.lyze.gdxUnBox2d.behaviours.fixtures.CreateCircleFixtureBehaviour;
 
+import static com.ray3k.unboxedinspace.Core.*;
 import static com.ray3k.unboxedinspace.GameScreen.*;
 
 public class BonusBehaviour extends BehaviourAdapter {
@@ -36,7 +37,7 @@ public class BonusBehaviour extends BehaviourAdapter {
         fixtureDef.restitution = 1;
         new CreateCircleFixtureBehaviour(Vector2.Zero, .5f, fixtureDef, getGameObject());
 
-        Sprite sprite = new Sprite(Core.skin.getSprite("box"));
+        Sprite sprite = new Sprite(skin.getSprite("box"));
         sprite.setScale(.5f);
         new SpriteBehaviour(getGameObject(), 0, 0, sprite, RO_PROJECTILES);
     }
@@ -48,6 +49,7 @@ public class BonusBehaviour extends BehaviourAdapter {
             getGameObject().destroy();
             addScore();
             playerBehaviour.newShootBehaviour();
+            soundBonus.play();
         } else {
             bounces++;
             if (bounces > BOUNCES_MAX) getGameObject().destroy();
