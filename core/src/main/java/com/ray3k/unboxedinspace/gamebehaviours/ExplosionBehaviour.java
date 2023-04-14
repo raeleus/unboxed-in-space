@@ -1,5 +1,6 @@
 package com.ray3k.unboxedinspace.gamebehaviours;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
@@ -9,22 +10,29 @@ import dev.lyze.gdxUnBox2d.GameObject;
 import dev.lyze.gdxUnBox2d.behaviours.BehaviourAdapter;
 import dev.lyze.gdxUnBox2d.behaviours.Box2dBehaviour;
 
-import static com.ray3k.unboxedinspace.GameScreen.*;
+import static com.ray3k.unboxedinspace.Core.skin;
+import static com.ray3k.unboxedinspace.Core.soundExplosion;
+import static com.ray3k.unboxedinspace.GameScreen.P2M;
+import static com.ray3k.unboxedinspace.GameScreen.RO_EXPLOSIONS;
 
-public class SpriteBehaviour extends BehaviourAdapter {
+public class ExplosionBehaviour extends BehaviourAdapter {
+    private float delay = .2f;
+    private float timer = delay;
+    public final Sprite sprite;
     public float offsetX;
     public float offsetY;
-    public final Sprite sprite;
     private final Vector2 position = new Vector2();
 
-    public SpriteBehaviour(GameObject gameObject, float offsetX, float offsetY, Sprite sprite, float renderOrder) {
+    public ExplosionBehaviour(GameObject gameObject, float offsetX, float offsetY) {
         super(gameObject);
-        this.offsetX = offsetX;
-        this.offsetY = offsetY;
-        this.sprite = sprite;
+        this.sprite = new Sprite(skin.getSprite("explosion"));
         sprite.setSize(sprite.getWidth() * P2M, sprite.getHeight() * P2M);
         sprite.setOriginCenter();
-        setRenderOrder(renderOrder);
+        sprite.setScale(0);
+        this.offsetX = offsetX;
+        this.offsetY = offsetY;
+        setRenderOrder(RO_EXPLOSIONS);
+        soundExplosion.play();
     }
 
     @Override
@@ -40,6 +48,13 @@ public class SpriteBehaviour extends BehaviourAdapter {
 
         position.add(offsetX - sprite.getWidth() / 2, offsetY - sprite.getHeight() / 2);
         sprite.setPosition(position.x, position.y);
+
+        timer -= delta;
+        sprite.setScale(.5f * (1 - timer / delay));
+        sprite.setAlpha(timer / delay);
+        if (timer < 0) {
+            destroy();
+        }
     }
 
     @Override

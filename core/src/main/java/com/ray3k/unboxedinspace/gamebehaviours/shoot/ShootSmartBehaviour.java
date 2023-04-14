@@ -1,4 +1,4 @@
-package com.ray3k.unboxedinspace.gamebehaviours;
+package com.ray3k.unboxedinspace.gamebehaviours.shoot;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector;
@@ -7,6 +7,8 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.ray3k.unboxedinspace.GameScreen;
+import com.ray3k.unboxedinspace.gamebehaviours.ProjectileBehaviour;
+import com.ray3k.unboxedinspace.gamebehaviours.TeamBehaviour;
 import com.ray3k.unboxedinspace.gamebehaviours.TeamBehaviour.Team;
 import dev.lyze.gdxUnBox2d.GameObject;
 import dev.lyze.gdxUnBox2d.behaviours.BehaviourAdapter;

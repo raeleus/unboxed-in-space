@@ -1,10 +1,12 @@
-package com.ray3k.unboxedinspace.gamebehaviours;
+package com.ray3k.unboxedinspace.gamebehaviours.shoot;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.ray3k.unboxedinspace.gamebehaviours.ProjectileBehaviour;
+import com.ray3k.unboxedinspace.gamebehaviours.TeamBehaviour;
 import dev.lyze.gdxUnBox2d.GameObject;
 import dev.lyze.gdxUnBox2d.behaviours.BehaviourAdapter;
 import dev.lyze.gdxUnBox2d.behaviours.Box2dBehaviour;
@@ -12,13 +14,13 @@ import dev.lyze.gdxUnBox2d.behaviours.Box2dBehaviour;
 import static com.ray3k.unboxedinspace.GameScreen.timeStep;
 import static com.ray3k.unboxedinspace.GameScreen.unBox;
 
-public class ShootStrongBehaviour extends BehaviourAdapter {
-    protected float delay = .4f;
-    protected float bulletVelocity = 20f;
-    protected float damage = 50f;
+public class ShootBackAndForthBehaviour extends BehaviourAdapter {
+    protected float delay = .2f;
+    protected float bulletVelocity = 10f;
+    protected float damage = 25f;
     private float timer;
 
-    public ShootStrongBehaviour(GameObject gameObject) {
+    public ShootBackAndForthBehaviour(GameObject gameObject) {
         super(gameObject);
     }
 
@@ -37,12 +39,26 @@ public class ShootStrongBehaviour extends BehaviourAdapter {
 
             GameObject go = new GameObject(unBox);
             Vector2 velocity = new Vector2(bulletVelocity, 0);
-            velocity.rotateDeg(MathUtils.radDeg * body.getTransform().getRotation());
+            velocity.rotateDeg(MathUtils.radDeg * body.getTransform().getRotation() - 180);
             new ProjectileBehaviour(go, velocity, damage);
 
             Vector2 position = new Vector2(new Vector2(body.getPosition()));
-            position.add(body.getLinearVelocity().x * timeStep, body.getLinearVelocity().y * timeStep);
+            position.add(body.getLinearVelocity().x * timeStep, body.getLinearVelocity().y * timeStep - .25f);
             BodyDef bodyDef = new BodyDef();
+            bodyDef.type = BodyType.DynamicBody;
+            bodyDef.position.set(position);
+            new Box2dBehaviour(bodyDef, go);
+
+            new TeamBehaviour(go, teamBehaviour.team);
+
+            go = new GameObject(unBox);
+            velocity = new Vector2(bulletVelocity, 0);
+            velocity.rotateDeg(MathUtils.radDeg * body.getTransform().getRotation());
+            new ProjectileBehaviour(go, velocity, damage);
+
+            position = new Vector2(new Vector2(body.getPosition()));
+            position.add(body.getLinearVelocity().x * timeStep, body.getLinearVelocity().y * timeStep + .25f);
+            bodyDef = new BodyDef();
             bodyDef.type = BodyType.DynamicBody;
             bodyDef.position.set(position);
             new Box2dBehaviour(bodyDef, go);

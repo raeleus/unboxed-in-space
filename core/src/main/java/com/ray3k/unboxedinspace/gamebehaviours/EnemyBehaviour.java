@@ -4,13 +4,12 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.Manifold;
-import com.ray3k.unboxedinspace.GameScreen;
 import dev.lyze.gdxUnBox2d.Behaviour;
 import dev.lyze.gdxUnBox2d.GameObject;
 import dev.lyze.gdxUnBox2d.behaviours.BehaviourAdapter;
 import dev.lyze.gdxUnBox2d.behaviours.Box2dBehaviour;
 
-import static com.ray3k.unboxedinspace.GameScreen.*;
+import static com.ray3k.unboxedinspace.GameScreen.enemies;
 
 public class EnemyBehaviour extends BehaviourAdapter {
     public static final float COLLISION_DAMAGE = 100;

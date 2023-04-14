@@ -1,4 +1,4 @@
-package com.ray3k.unboxedinspace.gamebehaviours;
+package com.ray3k.unboxedinspace.gamebehaviours.shoot;
 
 import dev.lyze.gdxUnBox2d.GameObject;
 

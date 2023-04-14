@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -19,10 +20,13 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.ray3k.unboxedinspace.gamebehaviours.*;
 import com.ray3k.unboxedinspace.gamebehaviours.TeamBehaviour.Team;
+import com.ray3k.unboxedinspace.gamebehaviours.shoot.ShootSingleBehaviour;
 import dev.lyze.gdxUnBox2d.*;
 import dev.lyze.gdxUnBox2d.behaviours.Box2dBehaviour;
 import dev.lyze.gdxUnBox2d.behaviours.fixtures.CreateBoxFixtureBehaviour;
 import dev.lyze.gdxUnBox2d.behaviours.fixtures.CreateCircleFixtureBehaviour;
+
+import static com.ray3k.unboxedinspace.Core.*;
 
 /** First screen of the application. Displayed after the application is created. */
 public class GameScreen extends ScreenAdapter {
@@ -49,6 +53,10 @@ public class GameScreen extends ScreenAdapter {
     public static final Array<GameObject> enemies = new Array<>();
     public static GameObject player;
 
+    private static int bestScore;
+    private static int score;
+    private static Label scoreLabel;
+
     @Override
     public void show() {
         gameViewport = new ExtendViewport(WORLD_WIDTH, WORLD_HEIGHT);
@@ -58,6 +66,8 @@ public class GameScreen extends ScreenAdapter {
         stage = new Stage(uiViewport, spriteBatch);
         unBox =  new UnBox<>(new Box2dPhysicsWorld(new World(new Vector2(0, 0), true)));
         timeStep = unBox.getOptions().getTimeStep();
+        if (score > bestScore) bestScore = score;
+        score = 0;
 
         initGame();
         createUI();
@@ -91,17 +101,17 @@ public class GameScreen extends ScreenAdapter {
 
     private void initGame() {
         player = new GameObject(unBox);
-        new PlayerBehaviour(player);
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyType.DynamicBody;
         bodyDef.position.set(5, 2);
         new Box2dBehaviour(bodyDef, player);
         new MovementKeyboardBehaviour(player);
-        new ShootAsteriskBehaviour(player);
+        Behaviour behaviour = new ShootSingleBehaviour(player);
+        new PlayerBehaviour(player, behaviour);
         new TeamBehaviour(player, Team.PLAYER);
-        new HealthBehaviour(player, 100);
+        new HealthBehaviour(player, 100, 0);
 
-        Sprite sprite = new Sprite(Core.skin.getSprite("player"));
+        Sprite sprite = new Sprite(skin.getSprite("player"));
         sprite.setScale(.5f);
         new SpriteBehaviour(player, 0, 0, sprite, RO_CHARACTERS);
 
@@ -145,5 +155,14 @@ public class GameScreen extends ScreenAdapter {
         Table root = new Table();
         root.setFillParent(true);
         stage.addActor(root);
+
+        root.bottom().pad(20);
+        scoreLabel = new Label("boxes 0 best " + bestScore, skin);
+        root.add(scoreLabel);
+    }
+
+    public static void addScore() {
+        score++;
+        scoreLabel.setText("boxes " + score +" best " + bestScore);
     }
 }

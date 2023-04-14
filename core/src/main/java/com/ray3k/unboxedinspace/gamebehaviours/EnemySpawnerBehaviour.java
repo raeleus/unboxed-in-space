@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.ray3k.unboxedinspace.Core;
 import com.ray3k.unboxedinspace.gamebehaviours.TeamBehaviour.Team;
+import com.ray3k.unboxedinspace.gamebehaviours.shoot.ShootSlowBehaviour;
 import dev.lyze.gdxUnBox2d.GameObject;
 import dev.lyze.gdxUnBox2d.behaviours.BehaviourAdapter;
 import dev.lyze.gdxUnBox2d.behaviours.Box2dBehaviour;
@@ -41,7 +42,7 @@ public class EnemySpawnerBehaviour extends BehaviourAdapter {
             new EnemyBehaviour(go);
             new ShootSlowBehaviour(go);
             new TeamBehaviour(go, Team.ENEMY);
-            new HealthBehaviour(go, 50);
+            new HealthBehaviour(go, 50, .25f);
 
             BodyDef bodyDef = new BodyDef();
             bodyDef.type = BodyType.DynamicBody;
