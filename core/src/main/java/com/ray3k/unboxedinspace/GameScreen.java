@@ -21,7 +21,6 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.ray3k.unboxedinspace.gamebehaviours.*;
 import com.ray3k.unboxedinspace.gamebehaviours.TeamBehaviour.Team;
 import com.ray3k.unboxedinspace.gamebehaviours.shoot.ShootSingleBehaviour;
-import com.ray3k.unboxedinspace.gamebehaviours.shoot.ShootSmartBehaviour;
 import dev.lyze.gdxUnBox2d.*;
 import dev.lyze.gdxUnBox2d.behaviours.Box2dBehaviour;
 import dev.lyze.gdxUnBox2d.behaviours.fixtures.CreateBoxFixtureBehaviour;
@@ -38,7 +37,7 @@ public class GameScreen extends ScreenAdapter {
     public static final float RO_BACKGROUND = -10f;
     public static final float RO_PROJECTILES = -5f;
     public static final float RO_CHARACTERS = 0f;
-    public static final float RO_EXPLOSIONS = 5f;
+    public static final float RO_EFFECTS = 5f;
     public static final short CAT_WALL = 0x1 << 1;
     public static final short CAT_PLAYER = 0x1 << 2;
     public static final short CAT_ENEMY = 0x1 << 3;
@@ -87,7 +86,7 @@ public class GameScreen extends ScreenAdapter {
         spriteBatch.end();
         unBox.postRender();
 
-        debugRenderer.render(unBox.getPhysicsWorld().getWorld(), gameViewport.getCamera().combined);
+//        debugRenderer.render(unBox.getPhysicsWorld().getWorld(), gameViewport.getCamera().combined);
 
         uiViewport.apply();
         stage.act(delta);

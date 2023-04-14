@@ -50,6 +50,11 @@ public class BonusBehaviour extends BehaviourAdapter {
             addScore();
             new ChangeShootBehavior(other.getGameObject());
             soundBonus.play();
+
+            GameObject go = new GameObject(unBox);
+
+            Sprite sprite = new Sprite(skin.getSprite("box-unboxed"));
+            new FadeSpriteBehaviour(go, getGameObject().getBehaviour(Box2dBehaviour.class).getBody().getPosition(), Vector2.Zero, 0, sprite, .5f, 1f, 1f);
         } else {
             bounces++;
             if (bounces > BOUNCES_MAX) getGameObject().destroy();

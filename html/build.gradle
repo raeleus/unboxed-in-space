@@ -34,6 +34,7 @@ dependencies {
   implementation "com.badlogicgames.gdx:gdx-box2d-gwt:$gdxVersion:sources"
   implementation "com.badlogicgames.gdx:gdx-box2d:$gdxVersion:sources"
   implementation "com.badlogicgames.gdx:gdx:$gdxVersion:sources"
+  implementation "space.earlygrey:shapedrawer:$shapedrawerVersion:sources"
   implementation "com.github.lyze237:gdx-UnBox2D:$gdxUnBox2dVersion:sources"
   implementation project(':core')
 

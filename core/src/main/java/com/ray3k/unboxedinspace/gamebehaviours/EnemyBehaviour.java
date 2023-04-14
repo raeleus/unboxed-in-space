@@ -39,7 +39,7 @@ public class EnemyBehaviour extends CharacterBehaviour {
     @Override
     public void onCollisionEnter(Behaviour other, Contact contact) {
         if (other.getGameObject().getBehaviour(PlayerBehaviour.class) != null) {
-            other.getGameObject().getBehaviour(HealthBehaviour.class).health -= COLLISION_DAMAGE;
+            other.getGameObject().getBehaviour(HealthBehaviour.class).subtractHealth(COLLISION_DAMAGE);
             getGameObject().destroy();
         }
     }

@@ -17,5 +17,7 @@ public class PlayerBehaviour extends CharacterBehaviour {
     public void onDestroy() {
         GameObject go = new GameObject(GameScreen.unBox);
         new GameOverBehaviour(go);
+
+        GameScreen.player = null;
     }
 }

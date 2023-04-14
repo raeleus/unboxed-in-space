@@ -50,11 +50,6 @@ public class ProjectileBehaviour extends BehaviourAdapter {
 
     @Override
     public boolean onCollisionPreSolve(Behaviour other, Contact contact, Manifold oldManifold) {
-        if (other instanceof ProjectileBehaviour) {
-            contact.setEnabled(false);
-            return true;
-        }
-
         Team team = getGameObject().getBehaviour(TeamBehaviour.class).team;
         TeamBehaviour otherTeamBehavior = other.getGameObject().getBehaviour(TeamBehaviour.class);
         if (otherTeamBehavior != null) {
@@ -71,7 +66,7 @@ public class ProjectileBehaviour extends BehaviourAdapter {
         if (otherTeamBehaviour == null || otherTeamBehaviour.team != team) {
             getGameObject().destroy();
             HealthBehaviour otherHealth = other.getGameObject().getBehaviour(HealthBehaviour.class);
-            if (otherHealth!= null) otherHealth.health -= damage;
+            if (otherHealth!= null) otherHealth.subtractHealth(damage);
         }
     }
 }
