@@ -6,16 +6,15 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import dev.lyze.gdxUnBox2d.Behaviour;
 import dev.lyze.gdxUnBox2d.GameObject;
-import dev.lyze.gdxUnBox2d.behaviours.BehaviourAdapter;
 import dev.lyze.gdxUnBox2d.behaviours.Box2dBehaviour;
 
 import static com.ray3k.unboxedinspace.GameScreen.enemies;
 
-public class EnemyBehaviour extends BehaviourAdapter {
+public class EnemyBehaviour extends CharacterBehaviour {
     public static final float COLLISION_DAMAGE = 100;
 
-    public EnemyBehaviour(GameObject gameObject) {
-        super(gameObject);
+    public EnemyBehaviour(GameObject gameObject, Behaviour shootBehaviour) {
+        super(gameObject, shootBehaviour);
     }
 
     @Override

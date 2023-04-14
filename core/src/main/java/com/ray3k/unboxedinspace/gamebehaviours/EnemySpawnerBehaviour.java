@@ -39,8 +39,15 @@ public class EnemySpawnerBehaviour extends BehaviourAdapter {
             timer = delay;
 
             GameObject go = new GameObject(unBox);
-            new EnemyBehaviour(go);
-            new ShootSlowBehaviour(go);
+            if (delay > .95f) new EnemyBehaviour(go, null);
+            else if (delay > .9f) new EnemyBehaviour(go, MathUtils.randomBoolean(.5f) ? new ShootSlowBehaviour(go) : null);
+            else {
+                if (MathUtils.randomBoolean(delay / .9f)) new EnemyBehaviour(go, new ShootSlowBehaviour(go));
+                else {
+                    new EnemyBehaviour(go, null);
+                    new ChangeShootBehavior(go);
+                }
+            }
             new TeamBehaviour(go, Team.ENEMY);
             new HealthBehaviour(go, 50, .25f);
 

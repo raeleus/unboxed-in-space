@@ -48,7 +48,7 @@ public class BonusBehaviour extends BehaviourAdapter {
         if (playerBehaviour != null) {
             getGameObject().destroy();
             addScore();
-            playerBehaviour.newShootBehaviour();
+            new ChangeShootBehavior(other.getGameObject());
             soundBonus.play();
         } else {
             bounces++;
