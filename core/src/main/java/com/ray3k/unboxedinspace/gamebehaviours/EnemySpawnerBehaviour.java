@@ -12,7 +12,7 @@ import com.ray3k.unboxedinspace.gamebehaviours.shoot.ShootSlowBehaviour;
 import dev.lyze.gdxUnBox2d.GameObject;
 import dev.lyze.gdxUnBox2d.behaviours.BehaviourAdapter;
 import dev.lyze.gdxUnBox2d.behaviours.Box2dBehaviour;
-import dev.lyze.gdxUnBox2d.behaviours.fixtures.CreateCircleFixtureBehaviour;
+import dev.lyze.gdxUnBox2d.behaviours.fixtures.CreateBox2dCircleFixtureBehaviour;
 
 import static com.ray3k.unboxedinspace.GameScreen.*;
 
@@ -58,7 +58,7 @@ public class EnemySpawnerBehaviour extends BehaviourAdapter {
             FixtureDef fixtureDef = new FixtureDef();
             fixtureDef.filter.categoryBits = CAT_ENEMY;
             fixtureDef.filter.maskBits = CAT_WALL + CAT_PLAYER + CAT_PROJECTILE;
-            new CreateCircleFixtureBehaviour(Vector2.Zero, .25f, fixtureDef, go);
+            new CreateBox2dCircleFixtureBehaviour(Vector2.Zero, .25f, fixtureDef, go);
 
             Sprite sprite = new Sprite(Core.skin.getSprite("enemy"));
             sprite.setScale(.5f);

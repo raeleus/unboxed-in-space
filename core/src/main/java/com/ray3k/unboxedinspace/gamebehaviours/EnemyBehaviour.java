@@ -31,13 +31,13 @@ public class EnemyBehaviour extends CharacterBehaviour {
     }
 
     @Override
-    public boolean onCollisionPreSolve(Behaviour other, Contact contact, Manifold oldManifold) {
+    public boolean onBox2dCollisionPreSolve(Behaviour other, Contact contact, Manifold oldManifold) {
         if (other.getGameObject().getBehaviour(WallBehaviour.class) != null) contact.setEnabled(false);
-        return super.onCollisionPreSolve(other, contact, oldManifold);
+        return super.onBox2dCollisionPreSolve(other, contact, oldManifold);
     }
 
     @Override
-    public void onCollisionEnter(Behaviour other, Contact contact) {
+    public void onBox2dCollisionEnter(Behaviour other, Contact contact) {
         if (other.getGameObject().getBehaviour(PlayerBehaviour.class) != null) {
             other.getGameObject().getBehaviour(HealthBehaviour.class).subtractHealth(COLLISION_DAMAGE);
             getGameObject().destroy();

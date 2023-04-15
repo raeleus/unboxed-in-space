@@ -8,6 +8,7 @@
     <inherits name="com.ray3k.unboxedinspace.Core"/>
     <inherits name="space.earlygrey.shapedrawer"/>
     <inherits name="dev.lyze.gdxUnBox2d"/>
+    <inherits name="org.dyn4j.dyn4j" />
     <entry-point class="com.ray3k.unboxedinspace.gwt.GwtLauncher"/>
     <set-configuration-property name="gdx.assetpath" value="../assets"/>
     <set-configuration-property name="xsiframe.failIfScriptTag" value="FALSE"/>

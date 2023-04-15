@@ -23,8 +23,8 @@ import com.ray3k.unboxedinspace.gamebehaviours.TeamBehaviour.Team;
 import com.ray3k.unboxedinspace.gamebehaviours.shoot.ShootSingleBehaviour;
 import dev.lyze.gdxUnBox2d.*;
 import dev.lyze.gdxUnBox2d.behaviours.Box2dBehaviour;
-import dev.lyze.gdxUnBox2d.behaviours.fixtures.CreateBoxFixtureBehaviour;
-import dev.lyze.gdxUnBox2d.behaviours.fixtures.CreateCircleFixtureBehaviour;
+import dev.lyze.gdxUnBox2d.behaviours.fixtures.CreateBox2dBoxFixtureBehaviour;
+import dev.lyze.gdxUnBox2d.behaviours.fixtures.CreateBox2dCircleFixtureBehaviour;
 
 import static com.ray3k.unboxedinspace.Core.*;
 
@@ -118,7 +118,7 @@ public class GameScreen extends ScreenAdapter {
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.filter.categoryBits = CAT_PLAYER;
         fixtureDef.filter.maskBits = CAT_WALL + CAT_ENEMY + CAT_PROJECTILE;
-        new CreateCircleFixtureBehaviour(Vector2.Zero, .1f, fixtureDef, player);
+        new CreateBox2dCircleFixtureBehaviour(Vector2.Zero, .1f, fixtureDef, player);
 
         GameObject go = new GameObject(unBox);
         new EnemySpawnerBehaviour(go);
@@ -130,22 +130,22 @@ public class GameScreen extends ScreenAdapter {
         new Box2dBehaviour(BodyDefType.StaticBody, go);
         fixtureDef = new FixtureDef();
         fixtureDef.filter.categoryBits = CAT_WALL;
-        new CreateBoxFixtureBehaviour(.5f, WORLD_HEIGHT / 2, new Vector2(-.5f, WORLD_HEIGHT / 2), fixtureDef, go);
+        new CreateBox2dBoxFixtureBehaviour(.5f, WORLD_HEIGHT / 2, new Vector2(-.5f, WORLD_HEIGHT / 2), fixtureDef, go);
         new WallBehaviour(go);
 
         go = new GameObject(unBox);
         new Box2dBehaviour(BodyDefType.StaticBody, go);
-        new CreateBoxFixtureBehaviour( .5f, WORLD_HEIGHT / 2, new Vector2(WORLD_WIDTH + .5f, WORLD_HEIGHT / 2), fixtureDef, go);
+        new CreateBox2dBoxFixtureBehaviour( .5f, WORLD_HEIGHT / 2, new Vector2(WORLD_WIDTH + .5f, WORLD_HEIGHT / 2), fixtureDef, go);
         new WallBehaviour(go);
 
         go = new GameObject(unBox);
         new Box2dBehaviour(BodyDefType.StaticBody, go);
-        new CreateBoxFixtureBehaviour(WORLD_WIDTH / 2, .5f, new Vector2(WORLD_WIDTH / 2, -.5f), fixtureDef, go);
+        new CreateBox2dBoxFixtureBehaviour(WORLD_WIDTH / 2, .5f, new Vector2(WORLD_WIDTH / 2, -.5f), fixtureDef, go);
         new WallBehaviour(go);
 
         go = new GameObject(unBox);
         new Box2dBehaviour(BodyDefType.StaticBody, go);
-        new CreateBoxFixtureBehaviour(WORLD_WIDTH / 2, .5f, new Vector2(WORLD_WIDTH / 2, WORLD_HEIGHT + .5f), fixtureDef, go);
+        new CreateBox2dBoxFixtureBehaviour(WORLD_WIDTH / 2, .5f, new Vector2(WORLD_WIDTH / 2, WORLD_HEIGHT + .5f), fixtureDef, go);
         new WallBehaviour(go);
     }
 
