@@ -6,7 +6,7 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import dev.lyze.gdxUnBox2d.Behaviour;
 import dev.lyze.gdxUnBox2d.GameObject;
-import dev.lyze.gdxUnBox2d.behaviours.Box2dBehaviour;
+import dev.lyze.gdxUnBox2d.behaviours.box2d.Box2dBehaviour;
 
 import static com.ray3k.unboxedinspace.GameScreen.enemies;
 
@@ -31,13 +31,13 @@ public class EnemyBehaviour extends CharacterBehaviour {
     }
 
     @Override
-    public boolean onBox2dCollisionPreSolve(Behaviour other, Contact contact, Manifold oldManifold) {
+    public boolean onCollisionPreSolve(Behaviour other, Contact contact, Manifold oldManifold) {
         if (other.getGameObject().getBehaviour(WallBehaviour.class) != null) contact.setEnabled(false);
-        return super.onBox2dCollisionPreSolve(other, contact, oldManifold);
+        return super.onCollisionPreSolve(other, contact, oldManifold);
     }
 
     @Override
-    public void onBox2dCollisionEnter(Behaviour other, Contact contact) {
+    public void onCollisionEnter(Behaviour other, Contact contact) {
         if (other.getGameObject().getBehaviour(PlayerBehaviour.class) != null) {
             other.getGameObject().getBehaviour(HealthBehaviour.class).subtractHealth(COLLISION_DAMAGE);
             getGameObject().destroy();

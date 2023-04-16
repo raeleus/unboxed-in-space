@@ -11,13 +11,13 @@ import com.ray3k.unboxedinspace.Core;
 import com.ray3k.unboxedinspace.gamebehaviours.TeamBehaviour.Team;
 import dev.lyze.gdxUnBox2d.Behaviour;
 import dev.lyze.gdxUnBox2d.GameObject;
-import dev.lyze.gdxUnBox2d.behaviours.BehaviourAdapter;
-import dev.lyze.gdxUnBox2d.behaviours.Box2dBehaviour;
-import dev.lyze.gdxUnBox2d.behaviours.fixtures.CreateBox2dCircleFixtureBehaviour;
+import dev.lyze.gdxUnBox2d.behaviours.box2d.Box2dBehaviour;
+import dev.lyze.gdxUnBox2d.behaviours.box2d.Box2dBehaviourAdapter;
+import dev.lyze.gdxUnBox2d.behaviours.box2d.fixtures.CreateBox2dCircleFixtureBehaviour;
 
 import static com.ray3k.unboxedinspace.GameScreen.*;
 
-public class ProjectileBehaviour extends BehaviourAdapter {
+public class ProjectileBehaviour extends Box2dBehaviourAdapter {
     private final Vector2 velocity;
     private float damage;
 
@@ -49,7 +49,7 @@ public class ProjectileBehaviour extends BehaviourAdapter {
     }
 
     @Override
-    public boolean onBox2dCollisionPreSolve(Behaviour other, Contact contact, Manifold oldManifold) {
+    public boolean onCollisionPreSolve(Behaviour other, Contact contact, Manifold oldManifold) {
         Team team = getGameObject().getBehaviour(TeamBehaviour.class).team;
         TeamBehaviour otherTeamBehavior = other.getGameObject().getBehaviour(TeamBehaviour.class);
         if (otherTeamBehavior != null) {
@@ -60,7 +60,7 @@ public class ProjectileBehaviour extends BehaviourAdapter {
     }
 
     @Override
-    public void onBox2dCollisionEnter(Behaviour other, Contact contact) {
+    public void onCollisionEnter(Behaviour other, Contact contact) {
         Team team = getGameObject().getBehaviour(TeamBehaviour.class).team;
         TeamBehaviour otherTeamBehaviour = other.getGameObject().getBehaviour(TeamBehaviour.class);
         if (otherTeamBehaviour == null || otherTeamBehaviour.team != team) {

@@ -2,9 +2,9 @@ package com.ray3k.unboxedinspace.gamebehaviours;
 
 import dev.lyze.gdxUnBox2d.Behaviour;
 import dev.lyze.gdxUnBox2d.GameObject;
-import dev.lyze.gdxUnBox2d.behaviours.BehaviourAdapter;
+import dev.lyze.gdxUnBox2d.behaviours.box2d.Box2dBehaviourAdapter;
 
-public class CharacterBehaviour extends BehaviourAdapter {
+public class CharacterBehaviour extends Box2dBehaviourAdapter {
     public Behaviour shootBehaviour;
 
     public CharacterBehaviour(GameObject gameObject, Behaviour shootBehaviour) {

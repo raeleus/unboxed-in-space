@@ -4,7 +4,6 @@ import com.badlogic.gdx.math.MathUtils;
 import com.ray3k.unboxedinspace.gamebehaviours.shoot.*;
 import dev.lyze.gdxUnBox2d.GameObject;
 import dev.lyze.gdxUnBox2d.behaviours.BehaviourAdapter;
-import dev.lyze.gdxUnBox2d.behaviours.Box2dBehaviour;
 
 public class ChangeShootBehavior extends BehaviourAdapter {
     public ChangeShootBehavior(GameObject gameObject) {

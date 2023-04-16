@@ -22,9 +22,9 @@ import com.ray3k.unboxedinspace.gamebehaviours.*;
 import com.ray3k.unboxedinspace.gamebehaviours.TeamBehaviour.Team;
 import com.ray3k.unboxedinspace.gamebehaviours.shoot.ShootSingleBehaviour;
 import dev.lyze.gdxUnBox2d.*;
-import dev.lyze.gdxUnBox2d.behaviours.Box2dBehaviour;
-import dev.lyze.gdxUnBox2d.behaviours.fixtures.CreateBox2dBoxFixtureBehaviour;
-import dev.lyze.gdxUnBox2d.behaviours.fixtures.CreateBox2dCircleFixtureBehaviour;
+import dev.lyze.gdxUnBox2d.behaviours.box2d.Box2dBehaviour;
+import dev.lyze.gdxUnBox2d.behaviours.box2d.fixtures.CreateBox2dBoxFixtureBehaviour;
+import dev.lyze.gdxUnBox2d.behaviours.box2d.fixtures.CreateBox2dCircleFixtureBehaviour;
 
 import static com.ray3k.unboxedinspace.Core.*;
 

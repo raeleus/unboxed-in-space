@@ -9,15 +9,15 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import dev.lyze.gdxUnBox2d.Behaviour;
 import dev.lyze.gdxUnBox2d.GameObject;
-import dev.lyze.gdxUnBox2d.behaviours.BehaviourAdapter;
-import dev.lyze.gdxUnBox2d.behaviours.Box2dBehaviour;
-import dev.lyze.gdxUnBox2d.behaviours.fixtures.CreateBox2dCircleFixtureBehaviour;
+import dev.lyze.gdxUnBox2d.behaviours.box2d.Box2dBehaviour;
+import dev.lyze.gdxUnBox2d.behaviours.box2d.Box2dBehaviourAdapter;
+import dev.lyze.gdxUnBox2d.behaviours.box2d.fixtures.CreateBox2dCircleFixtureBehaviour;
 
 import static com.ray3k.unboxedinspace.Core.skin;
 import static com.ray3k.unboxedinspace.Core.soundBonus;
 import static com.ray3k.unboxedinspace.GameScreen.*;
 
-public class BonusBehaviour extends BehaviourAdapter {
+public class BonusBehaviour extends Box2dBehaviourAdapter {
     private static final int BOUNCES_MAX = 3;
     private static final float speed = 5f;
     private int bounces;
@@ -43,7 +43,7 @@ public class BonusBehaviour extends BehaviourAdapter {
     }
 
     @Override
-    public void onBox2dCollisionEnter(Behaviour other, Contact contact) {
+    public void onCollisionEnter(Behaviour other, Contact contact) {
         PlayerBehaviour playerBehaviour = other.getGameObject().getBehaviour(PlayerBehaviour.class);
         if (playerBehaviour != null) {
             getGameObject().destroy();
