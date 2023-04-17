@@ -7,4 +7,5 @@ dependencies {
   implementation "space.earlygrey:shapedrawer:$shapedrawerVersion"
   implementation "com.github.lyze237:gdx-UnBox2D:$gdxUnBox2dVersion"
   api "com.github.lyze237:gdx-Dyn4j:$gdxDyn4jVersion"
+  api 'com.github.tommyettinger:formic:0.1.4'
 }

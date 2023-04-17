@@ -36,6 +36,7 @@ dependencies {
   implementation "com.badlogicgames.gdx:gdx:$gdxVersion:sources"
   implementation "space.earlygrey:shapedrawer:$shapedrawerVersion:sources"
   implementation "com.github.lyze237:gdx-UnBox2D:$gdxUnBox2dVersion:sources"
+  api 'com.github.tommyettinger:formic:0.1.4:sources'
   api "com.github.lyze237:gdx-Dyn4j:$gdxDyn4jVersion:sources"
   implementation project(':core')
 
